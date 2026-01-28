@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../features/live_map/data/datasources/live_map_ws_datasource.dart';
@@ -6,10 +7,14 @@ import '../features/live_map/domain/usecases/track_device_stream.dart';
 import '../features/live_map/presentation/providers/live_map_provider.dart';
 
 LiveMapProvider buildLiveMapProvider() {
-  const wsUrl = 'ws://68.233.96.14/ws?token=manujaputha';
+  final wsUrl = dotenv.env['WS_URL'];
+  if (wsUrl == null || wsUrl.isEmpty) {
+    throw StateError('Missing WS_URL in .env');
+  }
+  final wsUrlValue = wsUrl;
 
   final wsDataSource = LiveMapWsDataSource(
-    wsUrl: wsUrl,
+    wsUrl: wsUrlValue,
     channelFactory: (uri) => WebSocketChannel.connect(uri),
   );
 
@@ -18,4 +23,3 @@ LiveMapProvider buildLiveMapProvider() {
 
   return LiveMapProvider(trackDeviceStream: trackDeviceStream);
 }
-
