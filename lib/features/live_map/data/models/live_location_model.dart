@@ -9,19 +9,25 @@ class LiveLocationModel {
   });
 
   factory LiveLocationModel.fromUpdatePayload(Map<String, dynamic> payload) {
-    final lat = payload['lat'];
-    final lon = payload['lon'];
+    final lat = payload['lat'] ?? payload['la'];
+    final lon = payload['lon'] ?? payload['lo'];
     if (lat == null || lon == null) {
       throw const FormatException('Missing lat/lon in payload');
     }
 
+    final gpsFixValue = payload['gps_fix'] ?? payload['fx'];
+    final satNosValue = payload['sat_nos'] ?? payload['sn'];
+
     return LiveLocationModel(
       latitude: (lat as num).toDouble(),
       longitude: (lon as num).toDouble(),
-      gpsFix: payload['gps_fix'] == true,
-      satelliteCount: (payload['sat_nos'] ?? 0) is int
-          ? (payload['sat_nos'] ?? 0) as int
-          : (payload['sat_nos'] as num?)?.toInt() ?? 0,
+      gpsFix: gpsFixValue == true ||
+          gpsFixValue == 1 ||
+          gpsFixValue == '1' ||
+          gpsFixValue == 'true',
+      satelliteCount: (satNosValue ?? 0) is int
+          ? (satNosValue ?? 0) as int
+          : (satNosValue as num?)?.toInt() ?? 0,
     );
   }
 
@@ -37,4 +43,3 @@ class LiveLocationModel {
         satelliteCount: satelliteCount,
       );
 }
-
