@@ -6,9 +6,7 @@ import '../features/live_map/presentation/providers/live_map_provider.dart';
 import 'di.dart';
 
 class App extends StatelessWidget {
-  const App({super.key, required this.deviceId});
-
-  final String deviceId;
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Watchdog Tracker',
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blue),
-        home: LiveMapPage(deviceId: deviceId),
+        home: const LiveMapPage(),
       ),
     );
   }

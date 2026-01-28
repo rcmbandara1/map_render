@@ -7,6 +7,5 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  const deviceId = 'DEV001';
-  runApp(const App(deviceId: deviceId));
+  runApp(const App());
 }

@@ -6,9 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/live_map_provider.dart';
 
 class LiveMapPage extends StatefulWidget {
-  const LiveMapPage({super.key, required this.deviceId});
-
-  final String deviceId;
+  const LiveMapPage({super.key});
 
   @override
   State<LiveMapPage> createState() => _LiveMapPageState();
@@ -23,7 +21,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<LiveMapProvider>().startTracking(widget.deviceId);
+      context.read<LiveMapProvider>().startTracking('DEV001');
     });
   }
 
@@ -49,7 +47,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Live Track ${widget.deviceId}'),
+        title: const Text('My Kids Track'),
         actions: [
           IconButton(
             tooltip: 'Reconnect',
